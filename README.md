@@ -1,23 +1,63 @@
-# HR Multi-Agent System (Mistral AI)
+# HR Multi-Agent Hiring Pipeline (Mistral AI)
 
 ## Overview
-A **complete, end-to-end demo** of three functional HR agents powered by **Mistral AI** with a **Streamlit UI** and **CLI interface**.
+A **functional, end-to-end HR hiring pipeline** powered by **Mistral AI** with 3 intelligent agents that chain together: **JD Creation → Resume Screening → Offer Generation**.
 
-| Agent | Core Capability |
-|-------|----------------|
-| **Employee Lookup (Onboarding)** | Answers onboarding questions using employee data — search by ID or name, get department and email info. |
-| **Leave Request Validator** | Checks remaining leave balance, validates a request, and returns a draft approval/rejection email. |
-| **Payroll Assistant** | Retrieves salary, deductions, and net pay; renders a printable **payslip** (HTML) and a net-pay bar chart. |
+This is not a simple chatbot — each agent performs real tasks with structured input/output, business logic, and file persistence.
 
-All data lives in three CSV files under `data/`:
+| Agent | What It Actually Does |
+|-------|----------------------|
+| **JD Creator** | Takes role details + budget → generates structured JD + runs inclusive language **bias check** |
+| **Resume Screener** | Parses resume files → extracts structured data → **scores & ranks** candidates against JD |
+| **Offer Generator** | Creates offer letters with **hard budget guardrails** + handles salary **negotiation** rounds |
+
+### Key Features
+- ✅ **Structured I/O** — Agents accept and return structured data (dicts/JSON), not just free text
+- ✅ **Bias Detection** — JD Creator flags gendered/exclusionary language and suggests alternatives
+- ✅ **Resume Parsing** — Extracts name, email, skills, experience from free-form resume text
+- ✅ **Scoring & Ranking** — Candidates scored 0-100 with match/gap analysis and recommendation
+- ✅ **Budget Guardrails** — Hard logic (no LLM) prevents offers exceeding budget ceiling
+- ✅ **Negotiation Loop** — Multi-turn: candidate counters → agent checks ceiling → ACCEPT/COUNTER/REJECT/ESCALATE
+- ✅ **Agent Chaining** — Full pipeline: JD output feeds Resume Screener feeds Offer Generator
+- ✅ **File Persistence** — Generated JDs and offers saved as JSON to disk
+
+---
+
+## Architecture
+
 ```
-employees.csv   # emp_id, name, department, email
-leaves.csv      # emp_id, balance, used
-payroll.csv     # emp_id, salary, deduction, month
+User Input  ──►  Streamlit UI / CLI
+                      │
+                      ▼
+              ┌─── Pipeline Router ───┐
+              │          │            │
+              ▼          ▼            ▼
+         JD Creator   Resume      Offer
+          Agent       Screener    Generator
+              │        Agent       Agent
+              │          │            │
+              ▼          ▼            ▼
+         Mistral AI   Mistral AI   Budget Check
+         (generate)   (parse+score) (hard logic)
+              │          │          + Mistral AI
+              ▼          ▼            │
+         data/        data/          ▼
+         generated_   resumes/     data/
+         jds/         (input)      generated_
+         (output)                  offers/
+                                   (output)
 ```
-Replace these with your real HR exports — keep the column names the same.
 
-The UI also includes a **Dashboard** with company-wide totals and two Plotly charts (payroll net-pay & leave balance).
+### Agent Chaining (Full Pipeline Mode)
+```
+JD Creator ──► Resume Screener ──► Offer Generator
+   │                │                    │
+   │ JD text        │ Ranked list        │ Offer letter
+   │ + budget       │ + scores           │ + budget check
+   ▼                ▼                    ▼
+ Bias check      Top candidate       Negotiation
+                 selected            (if needed)
+```
 
 ---
 
@@ -25,50 +65,49 @@ The UI also includes a **Dashboard** with company-wide totals and two Plotly cha
 ```
 HR_MultiAgent_Project_Plan/
 │   .gitignore
-│   .env               # your Mistral API key – DO NOT COMMIT
-│   .env.example        # template for the key
+│   .env                    # Mistral API key – DO NOT COMMIT
+│   .env.example            # Template
 │   README.md
 │   requirements.txt
-│   run.bat             # Windows one-click starter
 │
 ├── agents/
-│   ├── __init__.py             # Mistral client helper
-│   ├── onboarding_agent.py     # employee lookup (Mistral-enhanced)
-│   ├── leave_agent.py          # leave validation
-│   ├── payroll_agent.py        # payroll summary (Mistral)
-│   ├── dashboard_agent.py      # company-wide totals (no LLM)
-│   ├── visualization_agent.py  # Plotly figures (no LLM)
-│   └── payslip_agent.py        # Jinja2 payslip HTML generator (no LLM)
+│   ├── __init__.py                 # Mistral API client (direct REST via httpx)
+│   ├── jd_creator_agent.py         # JD generation + bias check
+│   ├── resume_screener_agent.py    # Resume parsing + scoring + ranking
+│   └── offer_agent.py              # Offer generation + budget guardrails + negotiation
 │
 ├── data/
-│   ├── employees.csv
-│   ├── leaves.csv
-│   └── payroll.csv
+│   ├── resumes/                    # Input: resume .txt files (5 samples included)
+│   │   ├── priya_sharma.txt
+│   │   ├── sneha_reddy.txt
+│   │   ├── ananya_krishnan.txt
+│   │   ├── rahul_patel.txt
+│   │   └── vikram_deshmukh.txt
+│   ├── generated_jds/              # Output: generated JD JSON files
+│   └── generated_offers/           # Output: generated offer JSON files
 │
-├── templates/
-│   └── payslip.html            # HTML template for the payslip card
-│
-├── app_cli.py                  # CLI interface
-├── app_streamlit.py            # Main UI – launch with Streamlit
-└── test_sanity.py              # Sanity test (verifies agents return valid responses)
+├── app_streamlit.py                # Streamlit UI (4 pages)
+├── app_cli.py                      # CLI interface (4 subcommands)
+├── test_sanity.py                  # Sanity tests for all agents
+└── debug_llm.py                    # Quick API key test script
 ```
 
 ---
 
 ## Prerequisites
-- **Python 3.10+** installed
-- A **Mistral API key** (get one free at [console.mistral.ai](https://console.mistral.ai/))
+- **Python 3.10+**
+- A **Mistral API key** — get one free at [console.mistral.ai](https://console.mistral.ai/)
 
 ---
 
 ## Setup & Installation
 
-### Step 1 — Clone / navigate to the project
+### Step 1 — Navigate to the project
 ```powershell
 cd C:\Users\harsh\Downloads\HR_MultiAgent_Project_Plan
 ```
 
-### Step 2 — Create a virtual environment
+### Step 2 — Create and activate a virtual environment
 ```powershell
 python -m venv venv
 .\venv\Scripts\activate
@@ -80,17 +119,17 @@ pip install -r requirements.txt
 ```
 
 ### Step 4 — Set your Mistral API key
-Create a `.env` file in the project root (or copy `.env.example`):
+Create a `.env` file in the project root:
 ```
 MISTRAL_API_KEY=your_mistral_api_key_here
 ```
-> **Important:** Do **not** commit `.env` to any public repository. It is already in `.gitignore`.
+> ⚠️ Do **not** commit `.env` to any public repository. It is already in `.gitignore`.
 
-### Step 5 — Run the sanity test
+### Step 5 — Verify setup
 ```powershell
-python test_sanity.py
+python debug_llm.py        # Quick API test
+python test_sanity.py       # Full agent tests
 ```
-You should see three `[PASS]` lines confirming all agents work.
 
 ---
 
@@ -101,85 +140,78 @@ You should see three `[PASS]` lines confirming all agents work.
 .\venv\Scripts\activate
 streamlit run app_streamlit.py
 ```
-A browser window opens at `http://localhost:8501`.
+Opens at `http://localhost:8501`.
 
-#### UI Sections
-| Section | Description |
-|---------|-------------|
-| **Dashboard** | Total employees, total remaining leave, total payroll expense, and two interactive Plotly charts. |
-| **Employee Lookup** | Type a question about employees; the Mistral agent answers using the CSV data. |
-| **Leave Request** | Enter employee ID and days requested; the agent validates and returns a draft email. |
-| **Payroll** | Enter employee ID; get a salary summary and a formatted payslip HTML card. |
+#### UI Pages
+| Page | Description |
+|------|-------------|
+| **📋 JD Creator** | Fill in role details → generate JD with bias check |
+| **📄 Resume Screener** | Paste JD → screen resumes → view ranked candidates with scores |
+| **💼 Offer Generator** | Generate offer letters + handle negotiation rounds |
+| **🔗 Full Pipeline** | Run all 3 agents in sequence with one click |
 
 ### Option 2 — CLI
 ```powershell
 .\venv\Scripts\activate
 
-# Onboarding question
-python app_cli.py onboard "List all employees in Engineering"
+# Generate a Job Description
+python app_cli.py jd "Senior Python Developer" --skills "Python,Django,REST APIs" --budget-max 2000000
 
-# Leave request (employee E001 wants 2 days off)
-python app_cli.py leave E001 2
+# Screen resumes against a JD
+python app_cli.py screen "Senior Python Developer with 4+ years in Python, Django, REST APIs" --top-k 3
 
-# Payroll summary for E002
-python app_cli.py payroll E002
+# Generate an offer letter
+python app_cli.py offer "Priya Sharma" "Senior Python Developer" 1500000 --budget-max 2000000
+
+# Handle salary negotiation
+python app_cli.py negotiate "Priya Sharma" "Senior Python Developer" 1500000 1800000 --budget-max 2000000
 ```
-
-### Option 3 — One-click Windows batch
-Double-click `run.bat`. It will:
-- Create/activate the virtual environment
-- Install/upgrade dependencies
-- Run the sanity test
-- Launch the Streamlit UI
 
 ---
 
-## How It Works
+## How Each Agent Works
 
-### Architecture
-```
-User Input  ──►  Streamlit / CLI
-                      │
-                      ▼
-              ┌─── Router ───┐
-              │               │
-    ┌─────────┼───────────────┼─────────┐
-    ▼         ▼               ▼         ▼
-Onboarding  Leave          Payroll   Dashboard
-  Agent     Agent           Agent     Agent
-    │         │               │         │
-    ▼         ▼               ▼         ▼
- employees  leaves.csv    payroll.csv  All CSVs
-   .csv                                  │
-    │         │               │         ▼
-    └────┬────┘               │      Plotly Charts
-         ▼                    ▼
-   Mistral LLM          Mistral LLM
-   (NL response)         (NL response)
-```
+### 1. JD Creator (`agents/jd_creator_agent.py`)
+- **Input:** Role title, must-have/nice-to-have skills, location, work mode, budget range, team context
+- **Process:** Sends structured prompt to Mistral → generates markdown JD → runs bias scan
+- **Bias Check:** Scans for 15+ known biased terms (rockstar, ninja, manpower, etc.) and suggests inclusive alternatives
+- **Output:** `{jd_markdown, jd_data, bias_report, saved_path, budget}`
+- **Persistence:** Saves JD + metadata as JSON to `data/generated_jds/`
 
-1. **CSV data** is loaded by each agent and formatted as a markdown table.
-2. The table is injected into a **system prompt** along with the user's question.
-3. **Mistral AI** processes the prompt and returns a natural-language response.
-4. The response is displayed in the UI or printed to the terminal.
+### 2. Resume Screener (`agents/resume_screener_agent.py`)
+- **Input:** JD text + resume `.txt` files in `data/resumes/`
+- **Step 1 — Parse:** For each resume, Mistral extracts structured fields (name, email, skills, experience, education)
+- **Step 2 — Score:** Each parsed resume is scored 0-100 against the JD with matched/missing skills and recommendation
+- **Output:** `{candidates (sorted), total_screened, shortlist (top-k)}`
 
-### Tech Stack
+### 3. Offer Generator (`agents/offer_agent.py`)
+- **Input:** Candidate name, role, CTC, budget ceiling, joining date, location
+- **Budget Guardrail:** Pure logic check — if `offered_ctc > budget_max`, immediately rejects (no LLM call)
+- **Offer Letter:** Mistral generates professional markdown + HTML offer letter with compensation breakdown
+- **Negotiation:** Multi-turn logic:
+  - Counter ≤ budget → **ACCEPT**
+  - Counter within 5% over budget → **ESCALATE** to hiring manager
+  - Counter within 10% over → **COUNTER** at budget max
+  - Counter >10% over → **REJECT**, restate original offer
+- **Persistence:** Saves offer + metadata as JSON to `data/generated_offers/`
+
+---
+
+## Adding Your Own Resumes
+Drop `.txt` files into `data/resumes/`. The Resume Screener will automatically pick them up.
+Each file should contain a standard resume in plain text format.
+
+---
+
+## Tech Stack
 | Component | Technology |
 |-----------|-----------|
-| LLM | Mistral AI (`mistral-small-latest`) |
-| Data | CSV files + Pandas |
+| LLM | Mistral AI (`mistral-small-latest` via REST API) |
+| HTTP Client | httpx (direct API calls, no SDK needed) |
+| Data | CSV files + Pandas + JSON |
 | UI | Streamlit |
-| Charts | Plotly Express |
-| Payslip | Jinja2 HTML templates |
+| CLI | argparse |
 | Config | python-dotenv |
-
----
-
-## Extending the Demo
-- **Add more agents** — copy the pattern in `agents/` and expose a new tab in `app_streamlit.py`.
-- **Replace CSVs** — drop your own HR exports into `data/`; the agents will pick up the new values automatically.
-- **Change model** — edit the `model` parameter in `agents/__init__.py` (e.g., `mistral-large-latest` for better quality).
-- **Deploy** — push to GitHub, set up CI, and host the Streamlit app on any cloud provider.
 
 ---
 
@@ -187,16 +219,17 @@ Onboarding  Leave          Payroll   Dashboard
 
 | Problem | Solution |
 |---------|----------|
-| `MISTRAL_API_KEY not set` | Create a `.env` file with your key (see Step 4 above). |
-| `ModuleNotFoundError` | Run `pip install -r requirements.txt` inside the activated venv. |
-| Rate limit errors | The free tier has per-minute limits. Wait a minute and retry. |
-| CSV column mismatches | The agents expect column names: `emp_id`, `name`, `department`, `email`, `balance`, `used`, `salary`, `deduction`, `month`. |
+| `MISTRAL_API_KEY not set` | Create `.env` with your key (see Step 4) |
+| `ModuleNotFoundError` | Run `pip install -r requirements.txt` in your activated venv |
+| Rate limit errors | Mistral free tier has per-minute limits. Wait and retry. |
+| Resume parsing fails | Ensure resumes are `.txt` files in `data/resumes/` |
+| Budget rejection | This is intentional — reduce the offered CTC or increase the budget ceiling |
 
 ---
 
 ## License
-This demo code is released under the **MIT License** — feel free to modify, redistribute, or use it in commercial projects.
+MIT License — feel free to modify, redistribute, or use commercially.
 
 ---
 
-**Enjoy exploring functional AI agents for HR!**
+**Built with ❤️ using Mistral AI for the HR Multi-Agent Hiring Pipeline demo.**

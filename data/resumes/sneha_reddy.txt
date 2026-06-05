@@ -1,0 +1,36 @@
+SNEHA REDDY
+Email: sneha.reddy@proton.me | Phone: +91-8899776655 | Portfolio: snehareddy.dev
+
+PROFESSIONAL SUMMARY
+Full-stack developer with 5 years of experience specializing in Python and JavaScript
+ecosystems. Strong background in building AI/ML-integrated web applications.
+Comfortable with both backend architecture and frontend UI development.
+
+EXPERIENCE
+Lead Developer | AIFirst Labs, Bengaluru | 2022 – Present
+- Architected an AI-powered document processing platform (Python, FastAPI, React)
+- Integrated OpenAI and Anthropic APIs for intelligent document extraction
+- Built real-time collaboration features using WebSockets
+- Deployed on AWS using ECS Fargate with auto-scaling (handles 5K concurrent users)
+- Led sprint planning and technical design for a team of 5
+
+Software Developer | WebCraft Solutions, Pune | 2020 – 2022
+- Developed SaaS dashboard for analytics (React, D3.js, Node.js)
+- Built REST APIs and GraphQL endpoints using Django and Express
+- Implemented OAuth2 + JWT authentication system
+
+Junior Developer | CodeBase Inc, Hyderabad | 2019 – 2020
+- Built internal tools using Python (Flask) and Vue.js
+- Wrote integration tests using pytest and Cypress
+
+EDUCATION
+M.Tech in AI & ML | IIIT Hyderabad | 2017 – 2019 | CGPA: 9.3
+B.Tech in CSE | JNTU Hyderabad | 2013 – 2017 | CGPA: 8.5
+
+SKILLS
+Python, FastAPI, Django, Flask, React, Vue.js, TypeScript, Node.js, PostgreSQL,
+MongoDB, Redis, Docker, AWS (ECS, Lambda, S3), OpenAI API, LangChain,
+WebSockets, GraphQL, CI/CD, Agile, Technical Leadership
+
+PUBLICATIONS
+- "Efficient Document Layout Analysis using Vision Transformers" — AAAI 2023 Workshop

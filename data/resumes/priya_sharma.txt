@@ -1,0 +1,30 @@
+PRIYA SHARMA
+Email: priya.sharma@gmail.com | Phone: +91-9876543210 | LinkedIn: linkedin.com/in/priyasharma
+
+PROFESSIONAL SUMMARY
+Senior Software Engineer with 6 years of experience in full-stack web development.
+Expertise in Python, Django, React, and cloud services (AWS). Led a team of 4 developers
+at a Series-B startup building a fintech platform processing 50K+ daily transactions.
+
+EXPERIENCE
+Senior Software Engineer | FinPay Solutions, Bengaluru | 2021 – Present
+- Led backend migration from monolith to microservices (Python, FastAPI, Docker)
+- Designed REST APIs handling 10K+ requests/minute with 99.9% uptime
+- Implemented CI/CD pipelines using GitHub Actions, reducing deploy time by 60%
+- Mentored 3 junior developers through code reviews and pair programming
+
+Software Engineer | TechBridge India, Pune | 2019 – 2021
+- Built customer-facing dashboard using React, TypeScript, Redux
+- Developed data pipeline using Apache Airflow for ETL processing
+- Wrote unit tests achieving 85% code coverage
+
+EDUCATION
+B.Tech in Computer Science | IIT Bombay | 2015 – 2019 | CGPA: 8.7
+
+SKILLS
+Python, Django, FastAPI, React, TypeScript, PostgreSQL, Redis, Docker, Kubernetes,
+AWS (EC2, S3, Lambda), CI/CD, REST APIs, Microservices, Git, Agile/Scrum
+
+CERTIFICATIONS
+- AWS Solutions Architect Associate (2023)
+- Google Professional Cloud Developer (2022)

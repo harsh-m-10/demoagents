@@ -1,0 +1,29 @@
+RAHUL PATEL
+Email: rahul.patel@outlook.com | Phone: +91-8765432109
+
+SUMMARY
+DevOps Engineer with 4 years of experience in cloud infrastructure and automation.
+Proficient in AWS, Terraform, Jenkins, and container orchestration.
+
+EXPERIENCE
+DevOps Engineer | CloudNine Systems, Hyderabad | 2022 – Present
+- Managed Kubernetes clusters (EKS) serving 200+ microservices
+- Automated infrastructure provisioning with Terraform (50+ modules)
+- Set up monitoring stack: Prometheus, Grafana, PagerDuty alerting
+- Reduced cloud costs by 30% through right-sizing and spot instances
+
+Junior DevOps Engineer | DataStack Labs, Mumbai | 2020 – 2022
+- Maintained Jenkins CI/CD pipelines for 15 projects
+- Wrote Ansible playbooks for server configuration management
+- Managed Linux servers (Ubuntu, CentOS) across dev/staging/prod
+
+EDUCATION
+B.E. in Information Technology | VJTI Mumbai | 2016 – 2020 | CGPA: 7.8
+
+SKILLS
+AWS, Terraform, Kubernetes, Docker, Jenkins, Ansible, Linux,
+Python (scripting), Bash, Prometheus, Grafana, Git, Nginx
+
+CERTIFICATIONS
+- CKA (Certified Kubernetes Administrator) 2023
+- AWS DevOps Professional 2022

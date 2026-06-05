@@ -1,0 +1,33 @@
+ANANYA KRISHNAN
+Email: ananya.k@yahoo.com | Phone: +91-7654321098 | GitHub: github.com/ananyak
+
+ABOUT ME
+Fresh graduate with strong fundamentals in data structures, algorithms, and Python.
+Completed 2 internships in backend development. Passionate about building scalable systems.
+Active open-source contributor (50+ GitHub contributions in 2025).
+
+EXPERIENCE
+Software Engineering Intern | ZetaApps, Chennai | Jan 2025 – May 2025
+- Built RESTful APIs using Flask for an inventory management system
+- Wrote SQL queries and optimized database performance (PostgreSQL)
+- Participated in daily standups and sprint planning (Agile)
+
+Research Intern | IISc Bengaluru, CS Dept | Jun 2024 – Dec 2024
+- Assisted in NLP research project on text summarization
+- Implemented baseline models using PyTorch and Hugging Face Transformers
+- Co-authored a workshop paper (under review)
+
+EDUCATION
+B.Tech in Computer Science | NIT Trichy | 2021 – 2025 | CGPA: 9.1
+
+PROJECTS
+- URL Shortener Service (Go, Redis, Docker) — 200+ GitHub stars
+- Budget Tracker App (React Native, Firebase)
+- ML Pipeline for Sentiment Analysis (Python, scikit-learn)
+
+SKILLS
+Python, Flask, Go, SQL, PostgreSQL, PyTorch, React, Git, Docker, Linux, Data Structures
+
+ACHIEVEMENTS
+- Google Summer of Code 2024 participant
+- ACM-ICPC Regionals 2023 (Rank 47)

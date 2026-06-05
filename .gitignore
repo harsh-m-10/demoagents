@@ -14,3 +14,7 @@ venv/
 Thumbs.db
 # Streamlit secrets
 .secrets
+
+# Generated agent artifacts
+data/generated_jds/*.json
+data/generated_offers/*.json
