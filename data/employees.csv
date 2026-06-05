@@ -1,0 +1,4 @@
+emp_id,name,department,email
+E001,Alice,HR,alice@example.com
+E002,Bob,Engineering,bob@example.com
+E003,Charlie,Marketing,charlie@example.com

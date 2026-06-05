@@ -1,0 +1,16 @@
+# Python compiled files
+__pycache__/
+*.py[cod]
+# Virtual environment
+venv/
+# Environment variables
+.env
+# IDE files
+.vscode/
+# Jupyter notebooks
+.ipynb_checkpoints/
+# OS artifacts
+.DS_Store
+Thumbs.db
+# Streamlit secrets
+.secrets

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {font-family: Arial, sans-serif; margin: 20px;}
+        .card {border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px;}
+        .title {font-size: 1.4em; margin-bottom: 10px;}
+        .row {margin-bottom: 6px;}
+        .label {font-weight: bold;}
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="title">Payslip – {{ month }}</div>
+    <div class="row"><span class="label">Employee ID:</span> {{ emp_id }}</div>
+    <div class="row"><span class="label">Basic Salary:</span> ${{ "{:.2f}".format(salary) }}</div>
+    <div class="row"><span class="label">Deduction:</span> ${{ "{:.2f}".format(deduction) }}</div>
+    <div class="row"><span class="label">Net Pay:</span> <strong>${{ "{:.2f}".format(net) }}</strong></div>
+</div>
+</body>
+</html>
