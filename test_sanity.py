@@ -81,5 +81,5 @@ if __name__ == "__main__":
     )
 
     print("\n" + ("=" * 50))
-    print("ALL PASSED ✅" if all_ok else "SOME TESTS FAILED ❌")
+    print("ALL PASSED [OK]" if all_ok else "SOME TESTS FAILED [FAIL]")
     sys.exit(0 if all_ok else 1)

@@ -12,14 +12,14 @@ This is not a simple chatbot — each agent performs real tasks with structured 
 | **Offer Generator** | Creates offer letters with **hard budget guardrails** + handles salary **negotiation** rounds |
 
 ### Key Features
-- ✅ **Structured I/O** — Agents accept and return structured data (dicts/JSON), not just free text
-- ✅ **Bias Detection** — JD Creator flags gendered/exclusionary language and suggests alternatives
-- ✅ **Resume Parsing** — Extracts name, email, skills, experience from free-form resume text
-- ✅ **Scoring & Ranking** — Candidates scored 0-100 with match/gap analysis and recommendation
-- ✅ **Budget Guardrails** — Hard logic (no LLM) prevents offers exceeding budget ceiling
-- ✅ **Negotiation Loop** — Multi-turn: candidate counters → agent checks ceiling → ACCEPT/COUNTER/REJECT/ESCALATE
-- ✅ **Agent Chaining** — Full pipeline: JD output feeds Resume Screener feeds Offer Generator
-- ✅ **File Persistence** — Generated JDs and offers saved as JSON to disk
+- **Structured I/O** — Agents accept and return structured data (dicts/JSON), not just free text
+- **Bias Detection** — JD Creator flags gendered/exclusionary language and suggests alternatives
+- **Resume Parsing** — Extracts name, email, skills, experience from free-form resume text
+- **Scoring & Ranking** — Candidates scored 0-100 with match/gap analysis and recommendation
+- **Budget Guardrails** — Hard logic (no LLM) prevents offers exceeding budget ceiling
+- **Negotiation Loop** — Multi-turn: candidate counters → agent checks ceiling → ACCEPT/COUNTER/REJECT/ESCALATE
+- **Agent Chaining** — Full pipeline: JD output feeds Resume Screener feeds Offer Generator
+- **File Persistence** — Generated JDs and offers saved as JSON to disk
 
 ---
 
@@ -123,7 +123,7 @@ Create a `.env` file in the project root:
 ```
 MISTRAL_API_KEY=your_mistral_api_key_here
 ```
-> ⚠️ Do **not** commit `.env` to any public repository. It is already in `.gitignore`.
+> Note: Do not commit `.env` to any public repository. It is already in `.gitignore`.
 
 ### Step 5 — Verify setup
 ```powershell
@@ -145,10 +145,10 @@ Opens at `http://localhost:8501`.
 #### UI Pages
 | Page | Description |
 |------|-------------|
-| **📋 JD Creator** | Fill in role details → generate JD with bias check |
-| **📄 Resume Screener** | Paste JD → screen resumes → view ranked candidates with scores |
-| **💼 Offer Generator** | Generate offer letters + handle negotiation rounds |
-| **🔗 Full Pipeline** | Run all 3 agents in sequence with one click |
+| **JD Creator** | Fill in role details → generate JD with bias check |
+| **Resume Screener** | Paste JD → screen resumes → view ranked candidates with scores |
+| **Offer Generator** | Generate offer letters + handle negotiation rounds |
+| **Full Pipeline** | Run all 3 agents in sequence with one click |
 
 ### Option 2 — CLI
 ```powershell
@@ -230,6 +230,4 @@ Each file should contain a standard resume in plain text format.
 ## License
 MIT License — feel free to modify, redistribute, or use commercially.
 
----
-
-**Built with ❤️ using Mistral AI for the HR Multi-Agent Hiring Pipeline demo.**
+**Built using Mistral AI for the HR Multi-Agent Hiring Pipeline demo.**

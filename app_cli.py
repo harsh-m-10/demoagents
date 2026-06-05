@@ -41,10 +41,10 @@ if args.mode == "jd":
     )
     print(result["jd_markdown"])
     if result["bias_report"]:
-        print("\n⚠️  BIAS CHECK FINDINGS:")
+        print("\nWARNING - BIAS CHECK FINDINGS:")
         for f in result["bias_report"]:
             print(f"  - {f['suggestion']}")
-    print(f"\n💾 Saved: {result['saved_path']}")
+    print(f"\nSaved: {result['saved_path']}")
 
 elif args.mode == "screen":
     # If JD arg is a file path, read it
@@ -71,10 +71,10 @@ elif args.mode == "offer":
         budget_max=args.budget_max,
     )
     if not result["budget_check"]["within_budget"]:
-        print(f"🚫 {result['budget_check']['message']}")
+        print(f"ERROR: {result['budget_check']['message']}")
     else:
         print(result["offer_markdown"])
-        print(f"\n💾 Saved: {result['saved_path']}")
+        print(f"\nSaved: {result['saved_path']}")
 
 elif args.mode == "negotiate":
     result = offer_agent.negotiate(
